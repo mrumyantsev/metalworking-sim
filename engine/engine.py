@@ -33,6 +33,7 @@ class Engine:
         self.__plates_number = 4
         self.__eccentricity_radius = 1.0
 
+        self.__tool_diameter_mm = 2
         self.__rotation_rpm = 20
         self.__speed_mmpm = 30
         self.__is_rotate_clockwise = True
@@ -65,7 +66,7 @@ class Engine:
                 self.__motion_direction, self.__tool_center_x, self.__tool_center_y,
                 0.0, self.__eccentricity_radius)
             mill = tool_module.Mill(
-                self.__display_surface, axis.center_x,
+                self.__display_surface, self.__tool_diameter_mm/6.0, axis.center_x,
                 axis.center_y, 0.0, self.__plates_number)
 
             self.__run_stage(axis, mill, trajectory)

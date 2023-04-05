@@ -48,7 +48,8 @@ class Axis:
 
 
 class Plate:
-    def __init__(self, start_x=0.0, start_y=0.0, angle=0.0):
+    def __init__(self, size_coeff=1.0, start_x=0.0, start_y=0.0, angle=0.0):
+        self.size_coeff = size_coeff
         self.start_x = start_x
         self.start_y = start_y
         self.angle = angle
@@ -56,19 +57,21 @@ class Plate:
         self.move()
 
     def move(self):
-        self.points = ((self.start_x + 100.0*math.sin(self.angle*(math.pi/180.0)),
-                        self.start_y + 100.0*math.cos(self.angle*(math.pi/180.0))),
-                       (self.start_x + 300.0*math.sin(self.angle*(math.pi/180.0)),
-                        self.start_y + 300.0*math.cos(self.angle*(math.pi/180.0))),
-                       (self.start_x + 280.0*math.sin((self.angle + 15.0)*(math.pi/180.0)),
-                        self.start_y + 280.0*math.cos((self.angle + 15.0)*(math.pi/180.0))),
-                       (self.start_x + 145.0*math.sin((self.angle + 30.0)*(math.pi/180.0)),
-                        self.start_y + 145.0*math.cos((self.angle + 30.0)*(math.pi/180.0))))
+        self.points = ((self.start_x + self.size_coeff*100.0*math.sin(self.angle*(math.pi/180.0)),
+                        self.start_y + self.size_coeff*100.0*math.cos(self.angle*(math.pi/180.0))),
+                       (self.start_x + self.size_coeff*300.0*math.sin(self.angle*(math.pi/180.0)),
+                        self.start_y + self.size_coeff*300.0*math.cos(self.angle*(math.pi/180.0))),
+                       (self.start_x + self.size_coeff*280.0*math.sin((self.angle + 15.0)*(math.pi/180.0)),
+                        self.start_y + self.size_coeff*280.0*math.cos((self.angle + 15.0)*(math.pi/180.0))),
+                       (self.start_x + self.size_coeff*145.0*math.sin((self.angle + 30.0)*(math.pi/180.0)),
+                        self.start_y + self.size_coeff*145.0*math.cos((self.angle + 30.0)*(math.pi/180.0))))
 
 
 class Mill:
-    def __init__(self, display_surface, center_x=0.0,
-                 center_y=0.0, angle=0.0, plates_number=4):
+    def __init__(self, display_surface, size_coeff=1.0,
+                 center_x=0.0, center_y=0.0, angle=0.0,
+                 plates_number=4):
+        self.size_coeff = size_coeff
         self.display_surface = display_surface
         self.center_x = center_x
         self.center_y = center_y
@@ -78,7 +81,8 @@ class Mill:
         self.plates = []
 
         for i in range(self.plates_number):
-            plate = Plate(start_x=self.center_x, start_y=self.center_y, angle=i * self.segment)
+            plate = Plate(size_coeff=self.size_coeff, start_x=self.center_x,
+                          start_y=self.center_y, angle=i * self.segment)
             self.plates.append(plate)
 
     def move(self, axis, angle_coeff=0.0):
