@@ -2,7 +2,7 @@
 
 This is realistic 2D simulator of mechanical cutting process. Simulates cutting tool itself, eccentricity axis and cut path.
 
-![screenshot_v0-1](https://user-images.githubusercontent.com/36193247/230238022-1f2d80e2-77ad-4cf9-968f-bbe537560c02.png)
+![screenshot_v0-1](https://user-images.githubusercontent.com/36193247/230359745-46fdb744-5a86-4eac-8b59-0f0ccd07d782.png)
 
 ### How to play it
 
