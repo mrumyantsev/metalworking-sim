@@ -1,6 +1,7 @@
 import pygame
 import entities.tool as tool_module
 import math
+import config.config as config
 
 
 class Engine:
@@ -12,10 +13,14 @@ class Engine:
 
         self.__fps = cfg['r_fps']
 
-        self.__background_color = cfg['ent_backgroundColor']
-        self.__steel_color = cfg['ent_steelColor']
-        self.__trajectory_color = cfg['ent_trajectoryColor']
-        self.__mill_plate_color = cfg['ent_millPlateColor']
+        self.__background_color = config.get_color_value(
+            cfg['ent_backgroundColor'])
+        self.__steel_color = config.get_color_value(
+            cfg['ent_steelColor'])
+        self.__trajectory_color = config.get_color_value(
+            cfg['ent_trajectoryColor'])
+        self.__mill_plate_color = config.get_color_value(
+            cfg['ent_millPlateColor'])
 
         pygame.init()
         pygame.display.set_caption('Metalworking: The Game')
