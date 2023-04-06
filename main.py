@@ -1,9 +1,13 @@
+import libs.lib as lib
+import config.config as config
 import engine.engine as engine_module
-import constants
 
 
 def main() -> None:
-    engine = engine_module.Engine(constants.cfg)
+    cfg_path = lib.get_app_dir(__file__) + 'config.yml'
+    cfg = config.load_config(cfg_path)
+
+    engine = engine_module.Engine(cfg)
     engine.run()
 
 
