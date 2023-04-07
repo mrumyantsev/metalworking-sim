@@ -69,9 +69,9 @@ class Plate:
         self.__size_coeff = size_coeff
         self.__angle = angle
         self.__points = ()
-        self.move()
+        self.move(x, y, angle)
 
-    def move(self, x=0.0, y=0.0, angle=0.0):
+    def move(self, x, y, angle):
         self.__x = x
         self.__y = y
         self.__angle = angle
