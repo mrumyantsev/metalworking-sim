@@ -121,8 +121,4 @@ class Mill:
 
     def draw(self, color):
         for plate in self.__plates:
-            pygame.draw.polygon(self.__display_surface, color,
-                                ((plate.points[0][0], plate.points[0][1]),
-                                 (plate.points[1][0], plate.points[1][1]),
-                                 (plate.points[2][0], plate.points[2][1]),
-                                 (plate.points[3][0], plate.points[3][1])))
+            pygame.draw.polygon(self.__display_surface, color, plate.points)
