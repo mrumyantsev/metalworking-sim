@@ -19,34 +19,40 @@ class Trajectory:
             self.__display_surface.set_at, color)
 
 
-class Axis:
-    def __init__(self, direction='right', center_x=0.0,
-                 center_y=0.0, angle=0.0, eccentricity_radius=1.0):
-        self.direction = direction
-        self.center_x = center_x
-        self.center_y = center_y
-        self.angle = angle
-        # 0.01 mm = 1 pixel (default scale).
-        self.eccentricity_radius = eccentricity_radius
-        self.point_x = 0.0
-        self.point_y = 0.0
+class Radius:
+    def __init__(self, x=0.0, y=0.0,
+                 r=1.0, angle=0.0):
+        self.__x = x
+        self.__y = y
+        self.__r = r
+        self.__angle = angle
+        self.__circle_x = 0.0
+        self.__circle_y = 0.0
         self.move()
 
     def move(self, direction='right',
-             angle_coeff=0.0, speed_coeff=0.0):
-        self.angle += angle_coeff
-
+             speed_coeff=0.0, angle_coeff=0.0):
         if direction == 'right':
-            self.center_x += speed_coeff
+            self.__x += speed_coeff
         elif direction == 'left':
-            self.center_x -= speed_coeff
+            self.__x -= speed_coeff
         elif direction == 'up':
-            self.center_y -= speed_coeff
+            self.__y -= speed_coeff
         elif direction == 'down':
-            self.center_y += speed_coeff
+            self.__y += speed_coeff
+        
+        self.__angle += angle_coeff
 
-        self.point_x = self.center_x + self.eccentricity_radius*math.sin(self.angle*(math.pi/180.0))
-        self.point_y = self.center_y + self.eccentricity_radius*math.cos(self.angle*(math.pi/180.0))
+        self.__circle_x = self.__x + self.__r*math.sin(self.__angle*(math.pi/180.0))
+        self.__circle_y = self.__y + self.__r*math.cos(self.__angle*(math.pi/180.0))
+    
+    @property
+    def circle_x(self) -> float:
+        return self.__circle_x
+    
+    @property
+    def circle_y(self) -> float:
+        return self.__circle_y
 
 
 class Plate:
