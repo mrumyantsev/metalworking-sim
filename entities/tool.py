@@ -109,9 +109,9 @@ class Mill:
             plates_list.append(plate)
         
         self.__plates = tuple(plates_list)
-        self.move()
+        self.move(x, y, 0.0)
 
-    def move(self, x=0.0, y=0.0, angle_coeff=0.0):
+    def move(self, x, y, angle_coeff):
         self.__x = x
         self.__y = y
         self.__angle += angle_coeff
