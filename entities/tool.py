@@ -47,66 +47,74 @@ class Radius:
         self.__circle_y = self.__y + self.__r*math.cos(self.__angle*(math.pi/180.0))
     
     @property
-    def circle_x(self) -> float:
-        return self.__circle_x
+    def x(self) -> float:
+        return self.__x
     
     @property
-    def circle_y(self) -> float:
-        return self.__circle_y
+    def y(self) -> float:
+        return self.__y
 
 
 class Plate:
-    def __init__(self, size_coeff=1.0, start_x=0.0, start_y=0.0, angle=0.0):
-        self.size_coeff = size_coeff
-        self.start_x = start_x
-        self.start_y = start_y
-        self.angle = angle
-        self.points = ()
+    def __init__(self, x=0.0, y=0.0, size_coeff=1.0, angle=0.0):
+        self.__x = x
+        self.__y = y
+        self.__size_coeff = size_coeff
+        self.__angle = angle
+        self.__points = ()
         self.move()
 
-    def move(self):
-        self.points = ((self.start_x + self.size_coeff*100.0*math.sin(self.angle*(math.pi/180.0)),
-                        self.start_y + self.size_coeff*100.0*math.cos(self.angle*(math.pi/180.0))),
-                       (self.start_x + self.size_coeff*300.0*math.sin(self.angle*(math.pi/180.0)),
-                        self.start_y + self.size_coeff*300.0*math.cos(self.angle*(math.pi/180.0))),
-                       (self.start_x + self.size_coeff*280.0*math.sin((self.angle + 15.0)*(math.pi/180.0)),
-                        self.start_y + self.size_coeff*280.0*math.cos((self.angle + 15.0)*(math.pi/180.0))),
-                       (self.start_x + self.size_coeff*145.0*math.sin((self.angle + 30.0)*(math.pi/180.0)),
-                        self.start_y + self.size_coeff*145.0*math.cos((self.angle + 30.0)*(math.pi/180.0))))
+    def move(self, x=0.0, y=0.0, angle=0.0):
+        self.__x = x
+        self.__y = y
+        self.__angle = angle
+
+        self.__points = (
+            (self.__x + self.__size_coeff*100.0*math.sin(self.__angle*(math.pi/180.0)),
+             self.__y + self.__size_coeff*100.0*math.cos(self.__angle*(math.pi/180.0))),
+            (self.__x + self.__size_coeff*300.0*math.sin(self.__angle*(math.pi/180.0)),
+             self.__y + self.__size_coeff*300.0*math.cos(self.__angle*(math.pi/180.0))),
+            (self.__x + self.__size_coeff*280.0*math.sin((self.__angle + 15.0)*(math.pi/180.0)),
+             self.__y + self.__size_coeff*280.0*math.cos((self.__angle + 15.0)*(math.pi/180.0))),
+            (self.__x + self.__size_coeff*145.0*math.sin((self.__angle + 30.0)*(math.pi/180.0)),
+             self.__y + self.__size_coeff*145.0*math.cos((self.__angle + 30.0)*(math.pi/180.0))))
+
+    @property
+    def points(self) -> tuple:
+        return self.__points
 
 
 class Mill:
-    def __init__(self, display_surface, size_coeff=1.0,
-                 center_x=0.0, center_y=0.0, angle=0.0,
+    def __init__(self, display_surface: pygame.Surface, x=0.0,
+                 y=0.0, size_coeff=1.0, angle=0.0,
                  plates_number=4):
-        self.size_coeff = size_coeff
-        self.display_surface = display_surface
-        self.center_x = center_x
-        self.center_y = center_y
-        self.angle = angle
-        self.plates_number = plates_number
-        self.segment = 360.0 / self.plates_number
-        self.plates = []
+        self.__display_surface = display_surface
+        self.__x = x
+        self.__y = y
+        self.__angle = angle
+        self.__plates_number = plates_number
+        self.__segment_angle = 360.0/self.__plates_number
 
-        for i in range(self.plates_number):
-            plate = Plate(size_coeff=self.size_coeff, start_x=self.center_x,
-                          start_y=self.center_y, angle=i * self.segment)
-            self.plates.append(plate)
+        plates_list = []
 
-    def move(self, axis, angle_coeff=0.0):
-        self.angle += angle_coeff
-        self.center_x = axis.point_x
-        self.center_y = axis.point_y
+        for i in range(self.__plates_number):
+            plate = Plate(x, y, size_coeff, i*self.__segment_angle)
+            plates_list.append(plate)
+        
+        self.__plates = tuple(plates_list)
+        self.move()
 
-        for i in range(self.plates_number):
-            self.plates[i].start_x = self.center_x
-            self.plates[i].start_y = self.center_y
-            self.plates[i].angle = self.angle + i * self.segment
-            self.plates[i].move()
+    def move(self, x=0.0, y=0.0, angle_coeff=0.0):
+        self.__x = x
+        self.__y = y
+        self.__angle += angle_coeff
+
+        for i in range(self.__plates_number):
+            self.__plates[i].move(self.__x, self.__y, self.__angle + i*self.__segment_angle)
 
     def draw(self, color):
-        for plate in self.plates:
-            pygame.draw.polygon(self.display_surface, color,
+        for plate in self.__plates:
+            pygame.draw.polygon(self.__display_surface, color,
                                 ((plate.points[0][0], plate.points[0][1]),
                                  (plate.points[1][0], plate.points[1][1]),
                                  (plate.points[2][0], plate.points[2][1]),
