@@ -21,17 +21,16 @@ class Trajectory:
 
 class Radius:
     def __init__(self, x=0.0, y=0.0,
-                 r=1.0, angle=0.0):
+                 direction='right', r=1.0, angle=0.0):
         self.__x = x
         self.__y = y
         self.__r = r
         self.__angle = angle
         self.__circle_x = 0.0
         self.__circle_y = 0.0
-        self.move()
+        self.move(direction, 0.0, 0.0)
 
-    def move(self, direction='right',
-             speed_coeff=0.0, angle_coeff=0.0):
+    def move(self, direction, speed_coeff, angle_coeff):
         if direction == 'right':
             self.__x += speed_coeff
         elif direction == 'left':
