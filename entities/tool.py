@@ -54,6 +54,14 @@ class Radius:
     def y(self) -> float:
         return self.__y
 
+    @property
+    def circle_x(self) -> float:
+        return self.__circle_x
+    
+    @property
+    def circle_y(self) -> float:
+        return self.__circle_y
+
 
 class Plate:
     def __init__(self, x=0.0, y=0.0, size_coeff=1.0, angle=0.0):
