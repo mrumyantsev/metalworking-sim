@@ -9,8 +9,8 @@ class Trajectory:
         self.__display_surface = display_surface
         self.__trajectory_path = sll.Sll()
     
-    def add_point(self, tool_x: float, tool_y: float) -> None:
-        new_point = (lib.pbround(tool_x), lib.pbround(tool_y))
+    def add_point(self, x: float, y: float) -> None:
+        new_point = (lib.pbround(x), lib.pbround(y))
 
         self.__trajectory_path.add_to_tail(new_point)
 
