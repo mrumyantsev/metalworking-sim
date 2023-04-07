@@ -93,7 +93,7 @@ class Engine:
             mill.move(axis, self.__angle_coeff)
             mill.draw(self.__mill_plate_color)
             
-            trajectory.add_point(axis)
+            trajectory.add_point(axis.point_x, axis.point_y)
             trajectory.draw(self.__trajectory_color)
 
             self.__clock.tick(self.__fps)
