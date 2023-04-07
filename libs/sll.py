@@ -1,7 +1,7 @@
-class Node:
+class _Node:
     def __init__(self, value=None, next=None) -> None:
-        self.value = value
-        self.next = next
+        self._value = value
+        self._next = next
 
 
 # Singly-linked list.
@@ -11,12 +11,12 @@ class Sll:
         self.__tail = None
     
     def add_to_tail(self, value) -> None:
-        new_node = Node(value)
+        new_node = _Node(value)
 
         if not self.__head:
             self.__head = new_node
         else:
-            self.__tail.next = new_node
+            self.__tail._next = new_node
         
         self.__tail = new_node
 
@@ -24,5 +24,5 @@ class Sll:
         current_node = self.__head
 
         while current_node:
-            callback(current_node.value, extra_param)
-            current_node = current_node.next
+            callback(current_node._value, extra_param)
+            current_node = current_node._next
