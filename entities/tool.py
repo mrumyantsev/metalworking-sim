@@ -1,20 +1,21 @@
 import pygame
 import math
 import libs.sll as sll
+import libs.lib as lib
 
 
 class Trajectory:
-    def __init__(self, display_surface) -> None:
+    def __init__(self, display_surface: pygame.Surface) -> None:
         self.__display_surface = display_surface
         self.__trajectory_path = sll.Sll()
     
-    def add_point(self, tool_axis) -> None:
-        new_point = (int(tool_axis.point_x), int(tool_axis.point_y))
+    def add_point(self, tool_x: float, tool_y: float) -> None:
+        new_point = (lib.pbround(tool_x), lib.pbround(tool_y))
 
         self.__trajectory_path.add_to_tail(new_point)
 
-    def draw(self, color) -> None:
-        self.__trajectory_path.traverse_from_head_to_tail(
+    def draw(self, color: tuple) -> None:
+        self.__trajectory_path.traverse_from_head(
             self.__display_surface.set_at, color)
 
 
