@@ -20,7 +20,7 @@ class Sll:
         
         self.__tail = new_node
 
-    def traverse_from_head(self, callback, extra_param) -> None:
+    def traverse_from_head(self, callback, extra_param=None) -> None:
         current_node = self.__head
 
         while current_node:
