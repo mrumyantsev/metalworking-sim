@@ -1,12 +1,10 @@
 # Metalworking: The Game
 
-### Overview
-
 This is the realistic 2D simulator of mechanical cutting process. Simulates cutting tool itself, eccentricity axis and cut path.
 
 ![v0_1](https://user-images.githubusercontent.com/36193247/230894403-85afeedb-1923-4da7-817b-bbe13739738b.png)
 
-### How to play it
+# How to play it
 
 - Download and install the latest Python 3.x from https://www.python.org/downloads/
     - During installation process install Python downloading tool that called `pip`. Or manually install it later by using this commad:
