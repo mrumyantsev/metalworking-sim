@@ -1,4 +1,4 @@
-# Metalworking: The Game
+# Metalworking: The Game v0.1
 
 This is the realistic 2D simulator of mechanical cutting process. Simulates cutting tool itself, eccentricity axis and cut path.
 
