@@ -4,6 +4,10 @@ import math
 import entities.tool as tool_module
 
 
+_SPEED_MULTIPLIER = 1.5
+_EXTRA_DISTANCE = 150
+
+
 class Engine:
     def __init__(self, cfg) -> None:
         self.__cfg = cfg
@@ -33,7 +37,7 @@ class Engine:
         self.__is_game_over = False
         self.__is_stage_over = False
 
-        self.__spindle_x = -150
+        self.__spindle_x = -_EXTRA_DISTANCE
         self.__spindle_y = self.__resolution_height/2
         self.__plates_number = 4
         self.__radial_runout = 1.0
@@ -67,34 +71,34 @@ class Engine:
             self.__display_surface.fill(self.__steel_color)
 
             trajectory = tool_module.Trajectory(self.__display_surface)
-            spindle = tool_module.Radius(self.__spindle_x, self.__spindle_y,
-                                         self.__motion_direction, self.__radial_runout,
-                                         0.0)
-            mill = tool_module.Mill(self.__display_surface, spindle.circle_x,
-                                    spindle.circle_y, self.__tool_diameter_mm/6.0,
+            radius = tool_module.Radius(self.__spindle_x, self.__spindle_y,
+                                        self.__motion_direction, self.__radial_runout,
+                                        0.0)
+            mill = tool_module.Mill(self.__display_surface, radius.circle_x,
+                                    radius.circle_y, self.__tool_diameter_mm/6.0,
                                     0.0, self.__plates_number)
 
-            self.__run_stage(trajectory, spindle, mill)
+            self.__run_stage(trajectory, radius, mill)
 
         pygame.quit()
 
     # Stage sub-cycle.
-    def __run_stage(self, trajectory, spindle, mill) -> None:
+    def __run_stage(self, trajectory, radius, mill) -> None:
         self.__is_stage_over = False
 
         while not self.__is_stage_over:
             self.__handle_control_keys()
-            self.__handle_moving_off_screen(spindle)
+            self.__handle_moving_off_screen(radius)
             self.__set_moving_values()
 
-            spindle.move(self.__motion_direction, self.__speed_coeff,
-                         self.__angle_coeff)
+            radius.move(self.__motion_direction, self.__speed_coeff,
+                        self.__angle_coeff)
 
             mill.draw(self.__background_color)
-            mill.move(spindle.circle_x, spindle.circle_y, self.__angle_coeff)
+            mill.move(radius.circle_x, radius.circle_y, self.__angle_coeff)
             mill.draw(self.__mill_plate_color)
             
-            trajectory.add_point(spindle.circle_x, spindle.circle_y)
+            trajectory.add_point(radius.circle_x, radius.circle_y)
             trajectory.draw(self.__trajectory_color)
 
             self.__clock.tick(self.__fps)
@@ -108,21 +112,19 @@ class Engine:
                 self.__react_keydown(event)
     
     def __react_keydown(self, event) -> None:
-        multiplier = 1.5
-
         if event.key == pygame.K_ESCAPE:
             self.__is_stage_over = True
             self.__is_game_over = True
         if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
             self.__is_stage_over = True
         if event.key == pygame.K_KP_PLUS:
-            self.__rotation_rpm *= multiplier
+            self.__rotation_rpm *= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_MINUS:
-            self.__rotation_rpm /= multiplier
+            self.__rotation_rpm /= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_MULTIPLY:
-            self.__speed_mmpm *= multiplier
+            self.__speed_mmpm *= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_DIVIDE:
-            self.__speed_mmpm /= multiplier
+            self.__speed_mmpm /= _SPEED_MULTIPLIER
         if event.key == pygame.K_LALT or event.key == pygame.K_RALT:
             self.__is_rotate_clockwise = not self.__is_rotate_clockwise
         if event.key == pygame.K_LCTRL or event.key == pygame.K_RCTRL:
@@ -139,25 +141,23 @@ class Engine:
             self.__motion_direction = 'down'
     
     def __handle_moving_off_screen(self, item) -> None:
-        extra_distance = 150
-
-        if item.x > self.__resolution_width + extra_distance:
-            self.__spindle_x = -extra_distance
+        if item.x > self.__resolution_width + _EXTRA_DISTANCE:
+            self.__spindle_x = -_EXTRA_DISTANCE
             self.__spindle_y = item.y
             self.__motion_direction = 'right'
             self.__is_stage_over = True
-        elif item.x < -extra_distance:
-            self.__spindle_x = self.__resolution_width + extra_distance
+        elif item.x < -_EXTRA_DISTANCE:
+            self.__spindle_x = self.__resolution_width + _EXTRA_DISTANCE
             self.__spindle_y = item.y
             self.__motion_direction = 'left'
             self.__is_stage_over = True
-        elif item.y > self.__resolution_height + extra_distance:
+        elif item.y > self.__resolution_height + _EXTRA_DISTANCE:
             self.__spindle_x = item.x
-            self.__spindle_y = -extra_distance
+            self.__spindle_y = -_EXTRA_DISTANCE
             self.__motion_direction = 'down'
             self.__is_stage_over = True
-        elif item.y < -extra_distance:
+        elif item.y < -_EXTRA_DISTANCE:
             self.__spindle_x = item.x
-            self.__spindle_y = self.__resolution_height + extra_distance
+            self.__spindle_y = self.__resolution_height + _EXTRA_DISTANCE
             self.__motion_direction = 'up'
             self.__is_stage_over = True
