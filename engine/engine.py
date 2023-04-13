@@ -1,7 +1,7 @@
-import pygame
-import entities.tool as tool_module
-import math
 import config.config as config
+import pygame
+import math
+import entities.tool as tool_module
 
 
 class Engine:
@@ -33,10 +33,10 @@ class Engine:
         self.__is_game_over = False
         self.__is_stage_over = False
 
-        self.__tool_center_x = -150
-        self.__tool_center_y = self.__resolution_height/2
+        self.__spindle_x = -150
+        self.__spindle_y = self.__resolution_height/2
         self.__plates_number = 4
-        self.__eccentricity_radius = 1.0
+        self.__radial_runout = 1.0
 
         self.__tool_diameter_mm = 2
         self.__rotation_rpm = 20
@@ -67,39 +67,38 @@ class Engine:
             self.__display_surface.fill(self.__steel_color)
 
             trajectory = tool_module.Trajectory(self.__display_surface)
-            axis = tool_module.Axis(
-                self.__motion_direction, self.__tool_center_x, self.__tool_center_y,
-                0.0, self.__eccentricity_radius)
-            mill = tool_module.Mill(
-                self.__display_surface, self.__tool_diameter_mm/6.0, axis.center_x,
-                axis.center_y, 0.0, self.__plates_number)
+            spindle = tool_module.Radius(self.__spindle_x, self.__spindle_y,
+                                         self.__motion_direction, self.__radial_runout,
+                                         0.0)
+            mill = tool_module.Mill(self.__display_surface, spindle.circle_x,
+                                    spindle.circle_y, self.__tool_diameter_mm/6.0,
+                                    0.0, self.__plates_number)
 
-            self.__run_stage(axis, mill, trajectory)
+            self.__run_stage(trajectory, spindle, mill)
 
         pygame.quit()
 
     # Stage sub-cycle.
-    def __run_stage(self, axis, mill, trajectory) -> None:
+    def __run_stage(self, trajectory, spindle, mill) -> None:
         self.__is_stage_over = False
 
         while not self.__is_stage_over:
             self.__handle_control_keys()
+            self.__handle_moving_off_screen(spindle)
             self.__set_moving_values()
 
-            axis.move(
-                self.__motion_direction, self.__angle_coeff, self.__speed_coeff)
+            spindle.move(self.__motion_direction, self.__speed_coeff,
+                         self.__angle_coeff)
 
             mill.draw(self.__background_color)
-            mill.move(axis, self.__angle_coeff)
+            mill.move(spindle.circle_x, spindle.circle_y, self.__angle_coeff)
             mill.draw(self.__mill_plate_color)
             
-            trajectory.add_point(axis.point_x, axis.point_y)
+            trajectory.add_point(spindle.circle_x, spindle.circle_y)
             trajectory.draw(self.__trajectory_color)
 
             self.__clock.tick(self.__fps)
             pygame.display.flip()
-
-            self.__handle_moving_off_screen(axis)
 
     def __handle_control_keys(self) -> None:
         events = pygame.event.get()
@@ -139,26 +138,26 @@ class Engine:
         if event.key == pygame.K_DOWN:
             self.__motion_direction = 'down'
     
-    def __handle_moving_off_screen(self, tool) -> None:
+    def __handle_moving_off_screen(self, item) -> None:
         extra_distance = 150
 
-        if tool.center_x > self.__resolution_width + extra_distance:
-            self.__tool_center_x = -extra_distance
-            self.__tool_center_y = tool.center_y
+        if item.x > self.__resolution_width + extra_distance:
+            self.__spindle_x = -extra_distance
+            self.__spindle_y = item.y
             self.__motion_direction = 'right'
             self.__is_stage_over = True
-        if tool.center_x < -extra_distance:
-            self.__tool_center_x = self.__resolution_width + extra_distance
-            self.__tool_center_y = tool.center_y
+        elif item.x < -extra_distance:
+            self.__spindle_x = self.__resolution_width + extra_distance
+            self.__spindle_y = item.y
             self.__motion_direction = 'left'
             self.__is_stage_over = True
-        if tool.center_y > self.__resolution_height + extra_distance:
-            self.__tool_center_x = tool.center_x
-            self.__tool_center_y = -extra_distance
+        elif item.y > self.__resolution_height + extra_distance:
+            self.__spindle_x = item.x
+            self.__spindle_y = -extra_distance
             self.__motion_direction = 'down'
             self.__is_stage_over = True
-        if tool.center_y < -extra_distance:
-            self.__tool_center_x = tool.center_x
-            self.__tool_center_y = self.__resolution_height + extra_distance
+        elif item.y < -extra_distance:
+            self.__spindle_x = item.x
+            self.__spindle_y = self.__resolution_height + extra_distance
             self.__motion_direction = 'up'
             self.__is_stage_over = True
