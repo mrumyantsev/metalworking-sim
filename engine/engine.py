@@ -1,7 +1,9 @@
 import config.config as config
 import pygame
 import math
-import entities.tool as tool_module
+import entities.trajectory as trajectory_module
+import entities.radius as radius_module
+import entities.mill as mill_module
 
 
 _SPEED_MULTIPLIER = 1.5
@@ -70,11 +72,11 @@ class Engine:
         while not self.__is_game_over:
             self.__display_surface.fill(self.__steel_color)
 
-            trajectory = tool_module.Trajectory(self.__display_surface)
-            radius = tool_module.Radius(self.__spindle_x, self.__spindle_y,
+            trajectory = trajectory_module.Trajectory(self.__display_surface)
+            radius = radius_module.Radius(self.__spindle_x, self.__spindle_y,
                                         self.__motion_direction, self.__radial_runout,
                                         0.0)
-            mill = tool_module.Mill(self.__display_surface, radius.circle_x,
+            mill = mill_module.Mill(self.__display_surface, radius.circle_x,
                                     radius.circle_y, self.__tool_diameter_mm/6.0,
                                     0.0, self.__plates_number)
 
