@@ -4,4 +4,4 @@
 
 ### Added
 
-- First Release
+- First Release.
