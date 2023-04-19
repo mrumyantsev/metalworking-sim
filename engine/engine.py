@@ -22,13 +22,13 @@ class Engine:
         self.__fps = cfg['r_fps']
 
         self.__background_color = config.get_color_value(
-            cfg['ent_backgroundColor'])
+            cfg['r_backgroundColor'])
         self.__steel_color = config.get_color_value(
-            cfg['ent_steelColor'])
+            cfg['r_steelColor'])
         self.__trajectory_color = config.get_color_value(
-            cfg['ent_trajectoryColor'])
+            cfg['r_trajectoryColor'])
         self.__mill_plate_color = config.get_color_value(
-            cfg['ent_millPlateColor'])
+            cfg['r_millPlateColor'])
 
         pygame.init()
         pygame.display.set_caption('Metalworking: The Game')
