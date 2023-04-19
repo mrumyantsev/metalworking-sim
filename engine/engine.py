@@ -38,21 +38,22 @@ class Engine:
             (self.__resolution_width, self.__resolution_height))
         self.__clock = pygame.time.Clock()
 
-        self.__is_game_over = False
-        self.__is_stage_over = False
+        self.__mill_diameter_mm = 2
+        self.__mill_flutes_number = 4
+        self.__mill_radial_runout_mm = 0.005
+        self.__spindle_speed_rpm = 20
+        self.__feed_rate_mmpm = 30
 
         self.__spindle_x = -_EXTRA_DISTANCE
         self.__spindle_y = self.__resolution_height/2
-        self.__plates_number = 4
-        self.__radial_runout = 1.0
-
-        self.__tool_diameter_mm = 2
-        self.__rotation_rpm = 20
-        self.__speed_mmpm = 30
         self.__is_rotate_clockwise = True
         self.__is_stop_rotation = False
         self.__is_stop_motion = False
         self.__motion_direction = 'right'
+
+        self.__is_game_over = False
+        self.__is_stage_over = False
+
         self.__set_moving_values()
 
     def __choose_resolution(self) -> None:
@@ -67,7 +68,7 @@ class Engine:
         if self.__is_stop_rotation:
             self.__angle_coeff = 0.0
         else:
-            self.__angle_coeff = self.__rotation_rpm*math.pi*10.0/6.0/self.__fps
+            self.__angle_coeff = self.__spindle_speed_rpm*math.pi*10.0/6.0/self.__fps
 
         if self.__is_rotate_clockwise:
             self.__angle_coeff = -self.__angle_coeff
@@ -75,7 +76,7 @@ class Engine:
         if self.__is_stop_motion:
             self.__speed_coeff = 0.0
         else:
-            self.__speed_coeff = self.__speed_mmpm/0.6/self.__fps
+            self.__speed_coeff = self.__feed_rate_mmpm/0.6/self.__fps
 
     # General cycle.
     def run(self) -> None:
@@ -84,11 +85,11 @@ class Engine:
 
             trajectory = trajectory_module.Trajectory(self.__display_surface)
             radius = radius_module.Radius(self.__spindle_x, self.__spindle_y,
-                                        self.__motion_direction, self.__radial_runout,
+                                        self.__motion_direction, self.__mill_radial_runout_mm*100.0,
                                         0.0)
             mill = mill_module.Mill(self.__display_surface, radius.circle_x,
-                                    radius.circle_y, self.__tool_diameter_mm/6.0,
-                                    0.0, self.__plates_number)
+                                    radius.circle_y, self.__mill_diameter_mm/6.0,
+                                    0.0, self.__mill_flutes_number)
 
             self.__run_stage(trajectory, radius, mill)
 
@@ -130,13 +131,13 @@ class Engine:
         if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
             self.__is_stage_over = True
         if event.key == pygame.K_KP_PLUS:
-            self.__rotation_rpm *= _SPEED_MULTIPLIER
+            self.__spindle_speed_rpm *= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_MINUS:
-            self.__rotation_rpm /= _SPEED_MULTIPLIER
+            self.__spindle_speed_rpm /= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_MULTIPLY:
-            self.__speed_mmpm *= _SPEED_MULTIPLIER
+            self.__feed_rate_mmpm *= _SPEED_MULTIPLIER
         if event.key == pygame.K_KP_DIVIDE:
-            self.__speed_mmpm /= _SPEED_MULTIPLIER
+            self.__feed_rate_mmpm /= _SPEED_MULTIPLIER
         if event.key == pygame.K_LALT or event.key == pygame.K_RALT:
             self.__is_rotate_clockwise = not self.__is_rotate_clockwise
         if event.key == pygame.K_LCTRL or event.key == pygame.K_RCTRL:
