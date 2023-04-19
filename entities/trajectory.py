@@ -1,6 +1,6 @@
 import pygame
-import libs.sll as sll
-import libs.lib as lib
+from libs import sll
+from libs import lib
 
 
 class Trajectory:

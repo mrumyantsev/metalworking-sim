@@ -1,9 +1,9 @@
-import config.config as config
+from config import config
 import pygame
 import math
-import entities.trajectory as trajectory_module
-import entities.radius as radius_module
-import entities.mill as mill_module
+from entities import trajectory as trajectory_module
+from entities import radius as radius_module
+from entities import mill as mill_module
 
 
 _SPEED_MULTIPLIER = 1.5

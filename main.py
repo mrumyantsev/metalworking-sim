@@ -1,6 +1,6 @@
-import libs.lib as lib
-import config.config as config
-import engine.engine as engine_module
+from libs import lib
+from config import config
+from engine import engine as engine_module
 
 
 def main() -> None:
