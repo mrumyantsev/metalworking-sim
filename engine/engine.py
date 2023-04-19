@@ -14,8 +14,10 @@ class Engine:
     def __init__(self, cfg) -> None:
         self.__cfg = cfg
 
-        self.__resolution_width = self.__cfg['r_resolutionWidth']
-        self.__resolution_height = self.__cfg['r_resolutionHeight']
+        self.__resolution_width = 0
+        self.__resolution_height = 0
+
+        self.__choose_resolution()
 
         self.__fps = cfg['r_fps']
 
@@ -52,6 +54,14 @@ class Engine:
         self.__is_stop_motion = False
         self.__motion_direction = 'right'
         self.__set_moving_values()
+
+    def __choose_resolution(self) -> None:
+        if self.__cfg['r_fullscreenMode']:
+            self.__resolution_width = self.__cfg['r_fullscreenResolutionWidth']
+            self.__resolution_height = self.__cfg['r_fullscreenResolutionHeight']
+        else:
+            self.__resolution_width = self.__cfg['r_windowResolutionWidth']
+            self.__resolution_height = self.__cfg['r_windowResolutionHeight']
     
     def __set_moving_values(self) -> None:
         if self.__is_stop_rotation:
