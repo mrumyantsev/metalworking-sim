@@ -38,11 +38,11 @@ class Engine:
             (self.__resolution_width, self.__resolution_height))
         self.__clock = pygame.time.Clock()
 
-        self.__mill_diameter_mm = 2
-        self.__mill_flutes_number = 4
-        self.__mill_radial_runout_mm = 0.005
-        self.__spindle_speed_rpm = 20
-        self.__feed_rate_mmpm = 30
+        self.__mill_diameter_mm = cfg['ent_millDiameterMm']
+        self.__mill_flutes_number = cfg['ent_millFlutesNumber']
+        self.__mill_radial_runout_mm = cfg['ent_millRadialRunoutMm']
+        self.__spindle_speed_rpm = cfg['ent_spindleSpeedRpm']
+        self.__feed_rate_mmpm = cfg['ent_feedRateMmPerMin']
 
         self.__spindle_x = -_EXTRA_DISTANCE
         self.__spindle_y = self.__resolution_height/2

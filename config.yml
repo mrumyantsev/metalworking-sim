@@ -1,5 +1,10 @@
 ent_backgroundColor: "0 0 0"
+ent_feedRateMmPerMin: 30
+ent_millDiameterMm: 2
+ent_millFlutesNumber: 4
 ent_millPlateColor: "255 255 0"
+ent_millRadialRunoutMm: 0.005
+ent_spindleSpeedRpm: 20
 ent_steelColor: "192 192 192"
 ent_trajectoryColor: "255 0 0"
 r_fps: 125
