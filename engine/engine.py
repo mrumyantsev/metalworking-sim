@@ -142,15 +142,13 @@ class Engine:
 
             trajectory = trajectory_module.Trajectory(self.__display_surface)
             radius = radius_module.Radius(self.__spindle_x, self.__spindle_y,
-                                        self.__motion_direction, self.__mill_radial_runout_mm*100.0,
-                                        0.0)
+                                          self.__motion_direction, self.__mill_radial_runout_mm*100.0,
+                                          0.0)
             mill = mill_module.Mill(self.__display_surface, radius.circle_x,
                                     radius.circle_y, self.__mill_diameter_mm/6.0,
                                     0.0, self.__mill_flutes_number)
 
             self.__run_stage(trajectory, radius, mill)
-
-            
 
         pygame.quit()
 
