@@ -1,10 +1,10 @@
-ent_feedRateMmPerMin: 30
-ent_millDiameterMm: 2
+ent_feedRateMmPerMin: 40
+ent_millDiameterMm: 4
 ent_millFlutesNumber: 4
-ent_millRadialRunoutMm: 0.005
-ent_spindleSpeedRpm: 20
+ent_millRadialRunoutMm: 0.05
+ent_spindleSpeedRpm: 600
 r_backgroundColor: "0 0 0"
-r_fps: 125
+r_fps: 400
 r_fullscreenMode: false
 r_fullscreenResolutionHeight: 1080
 r_fullscreenResolutionWidth: 1920
