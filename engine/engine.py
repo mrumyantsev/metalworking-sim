@@ -8,6 +8,8 @@ from mill import mill as mill_module
 
 _SPEED_MULTIPLIER = 2.0
 _EXTRA_DISTANCE = 150
+_VALUE_LIMIT = 99999.9999
+
 _INFO_X = 15
 _INFO_Y = 15
 _RPM_SIGN = '[RPM]'
@@ -86,6 +88,12 @@ class Engine:
             self.__speed_coeff = 0.0
         else:
             self.__speed_coeff = self.__feed_rate_mmpm/0.6/self.__fps
+        
+        if (self.__spindle_speed_rpm > _VALUE_LIMIT):
+            self.__spindle_speed_rpm = _VALUE_LIMIT
+        
+        if (self.__feed_rate_mmpm > _VALUE_LIMIT):
+            self.__feed_rate_mmpm = _VALUE_LIMIT
 
     def __draw_info(self, radius) -> None:
         pygame.draw.rect(self.__display_surface, self.__background_color,
