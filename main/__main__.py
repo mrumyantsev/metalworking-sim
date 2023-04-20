@@ -15,7 +15,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 
-from libs import lib
+from lib import lib
 from config import config
 from engine import engine as engine_module
 
