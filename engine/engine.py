@@ -6,7 +6,7 @@ from entities import radius as radius_module
 from entities import mill as mill_module
 
 
-_SPEED_MULTIPLIER = 1.5
+_SPEED_MULTIPLIER = 2.0
 _EXTRA_DISTANCE = 150
 _INFO_X = 15
 _INFO_Y = 15
