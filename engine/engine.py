@@ -12,6 +12,8 @@ _VALUE_LIMIT = 99999.9999
 
 _INFO_X = 15
 _INFO_Y = 15
+_INFO_WIDTH = 227
+_INFO_HEIGHT = 47
 _RPM_SIGN = '[RPM]'
 _MMPM_SIGN = '[mm/min]'
 _MM_SIGN = '[mm]'
@@ -97,7 +99,7 @@ class Engine:
 
     def __draw_info(self, radius) -> None:
         pygame.draw.rect(self.__display_surface, self.__background_color,
-                         (_INFO_X, _INFO_Y, _INFO_X + 227, _INFO_Y + 47))
+                         (_INFO_X, _INFO_Y, _INFO_X + _INFO_WIDTH, _INFO_Y + _INFO_HEIGHT))
 
         extra_sign = _NO_SIGN
 
