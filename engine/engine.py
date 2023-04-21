@@ -97,7 +97,7 @@ class Engine:
 
     def __draw_info(self, radius) -> None:
         pygame.draw.rect(self.__display_surface, self.__background_color,
-                         (_INFO_X, _INFO_Y, _INFO_X + 229, _INFO_Y + 47))
+                         (_INFO_X, _INFO_Y, _INFO_X + 227, _INFO_Y + 47))
 
         extra_sign = _NO_SIGN
 
@@ -140,7 +140,7 @@ class Engine:
     def __draw_text(self, text='text', x=20, y=20) -> None:
         font = pygame.font.Font('./Fonts/FragmentMono-Regular.ttf', 13)
         font_surface = font.render(text, True, self.__mill_plate_color)
-        place = font_surface.get_rect(x=x + 3, y=y)
+        place = font_surface.get_rect(x=x + 2, y=y)
         self.__display_surface.blit(font_surface, place)
 
     # General cycle.
