@@ -1,26 +1,16 @@
+from info_screen.info_screen import InfoScreen
 from lib import lib
 import pygame
 import math
 from trajectory import trajectory as trajectory_module
 from radius import radius as radius_module
 from mill import mill as mill_module
+from info_screen import info_screen
 
 
 _SPEED_MULTIPLIER = 2.0
 _EXTRA_DISTANCE = 150
 _VALUE_LIMIT = 99999.9999
-
-_INFO_X = 15
-_INFO_Y = 15
-_INFO_WIDTH = 242
-_INFO_HEIGHT = 62
-_RPM_SIGN = '[RPM]'
-_MMPM_SIGN = '[mm/min]'
-_MM_SIGN = '[mm]'
-_STOP_SIGN = '[stop]'
-_PLUS_SIGN = '[+]'
-_MINUS_SIGN = '[-]'
-_NO_SIGN = ''
 
 
 class Engine:
@@ -98,54 +88,6 @@ class Engine:
         if (self.__feed_rate_mmpm > _VALUE_LIMIT):
             self.__feed_rate_mmpm = _VALUE_LIMIT
 
-    def __draw_info(self, radius) -> None:
-        pygame.draw.rect(self.__display_surface, self.__background_color,
-                         (_INFO_X, _INFO_Y, _INFO_WIDTH, _INFO_HEIGHT))
-
-        extra_sign = _NO_SIGN
-
-        if (self.__is_stop_rotation):
-            extra_sign = _STOP_SIGN
-        else:
-            extra_sign = _NO_SIGN
-
-        self.__draw_text(text=f'S: {self.__spindle_speed_rpm:11.4f} {_RPM_SIGN: <8} {extra_sign}',
-                         x=_INFO_X, y=_INFO_Y)
-        
-        if (self.__is_stop_motion):
-            extra_sign = _STOP_SIGN
-        else:
-            extra_sign = _NO_SIGN
-        
-        self.__draw_text(text=f'F: {self.__feed_rate_mmpm:11.4f} {_MMPM_SIGN} {extra_sign}',
-                         x=_INFO_X, y=_INFO_Y + 15)
-        
-        if (self.__motion_direction == 'right'):
-            extra_sign = _PLUS_SIGN
-        elif (self.__motion_direction == 'left'):
-            extra_sign = _MINUS_SIGN
-        else:
-            extra_sign = _NO_SIGN
-
-        self.__draw_text(text=f'X: {radius.x/10.0:11.4f} {_MM_SIGN: <8} {extra_sign}',
-                         x=_INFO_X, y=_INFO_Y + 30)
-        
-        if (self.__motion_direction == 'up'):
-            extra_sign = _PLUS_SIGN
-        elif (self.__motion_direction == 'down'):
-            extra_sign = _MINUS_SIGN
-        else:
-            extra_sign = _NO_SIGN
-
-        self.__draw_text(text=f'Y: {radius.y/10.0:11.4f} {_MM_SIGN: <8} {extra_sign}',
-                         x=_INFO_X, y=_INFO_Y + 45)
-
-    def __draw_text(self, text='text', x=20, y=20) -> None:
-        font = pygame.font.Font('./Fonts/FragmentMono-Regular.ttf', 13)
-        font_surface = font.render(text, True, self.__mill_plate_color)
-        place = font_surface.get_rect(x=x + 2, y=y)
-        self.__display_surface.blit(font_surface, place)
-
     # General cycle.
     def run(self) -> None:
         while not self.__is_game_over:
@@ -158,13 +100,14 @@ class Engine:
             mill = mill_module.Mill(self.__display_surface, radius.circle_x,
                                     radius.circle_y, self.__mill_diameter_mm/6.0,
                                     0.0, self.__mill_flutes_number)
+            info = info_screen.InfoScreen(self.__display_surface, 2, 2, radius)
 
-            self.__run_stage(trajectory, radius, mill)
+            self.__run_stage(trajectory, radius, mill, info)
 
         pygame.quit()
 
     # Stage sub-cycle.
-    def __run_stage(self, trajectory, radius, mill) -> None:
+    def __run_stage(self, trajectory, radius, mill, info) -> None:
         self.__is_stage_over = False
 
         while not self.__is_stage_over:
@@ -182,7 +125,10 @@ class Engine:
             trajectory.add_point(radius.circle_x, radius.circle_y)
             trajectory.draw(self.__trajectory_color)
 
-            self.__draw_info(radius)
+            info.update_conditions(self.__spindle_speed_rpm, self.__feed_rate_mmpm,
+                                   self.__motion_direction, self.__is_stop_rotation,
+                                   self.__is_stop_motion)
+            info.draw_info(self.__mill_plate_color, self.__background_color)
 
             self.__clock.tick(self.__fps)
             pygame.display.flip()
