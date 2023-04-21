@@ -2,6 +2,7 @@ import math
 
 
 class Radius:
+
     def __init__(self, x=0.0, y=0.0,
                  direction='right', r=1.0, angle=0.0):
         self.__x = x

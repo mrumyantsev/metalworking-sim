@@ -4,6 +4,7 @@ from lib import lib
 
 
 class Trajectory:
+
     def __init__(self, display_surface: pygame.Surface) -> None:
         self.__display_surface = display_surface
         self.__points_list = sll.Sll()

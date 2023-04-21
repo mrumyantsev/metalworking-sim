@@ -1,4 +1,5 @@
 class _Node:
+
     def __init__(self, value=None, next=None) -> None:
         self._value = value
         self._next = next
@@ -6,6 +7,7 @@ class _Node:
 
 # Singly-linked list.
 class Sll:
+
     def __init__(self) -> None:
         self.__head = None
         self.__tail = None

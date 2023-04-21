@@ -24,6 +24,7 @@ _NO_SIGN = ''
 
 
 class Engine:
+
     def __init__(self, cfg) -> None:
         self.__cfg = cfg
 

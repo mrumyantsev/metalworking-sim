@@ -3,6 +3,7 @@ import math
 
 
 class _Plate:
+
     def __init__(self, x=0.0, y=0.0, size_coeff=1.0, angle=0.0):
         self.__x = x
         self.__y = y
@@ -32,6 +33,7 @@ class _Plate:
 
 
 class Mill:
+
     def __init__(self, display_surface: pygame.Surface, x=0.0,
                  y=0.0, size_coeff=1.0, angle=0.0,
                  plates_number=4):
