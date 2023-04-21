@@ -5,8 +5,8 @@ from lib import lib
 
 class Trajectory:
 
-    def __init__(self, display_surface: pygame.Surface) -> None:
-        self.__display_surface = display_surface
+    def __init__(self, surface: pygame.Surface) -> None:
+        self.__surface = surface
         self.__points_list = sll.Sll()
     
     def add_point(self, x: float, y: float) -> None:
@@ -16,4 +16,4 @@ class Trajectory:
 
     def draw(self, color: tuple) -> None:
         self.__points_list.traverse_from_head(
-            self.__display_surface.set_at, color)
+            self.__surface.set_at, color)

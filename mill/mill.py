@@ -34,10 +34,10 @@ class _Plate:
 
 class Mill:
 
-    def __init__(self, display_surface: pygame.Surface, x=0.0,
+    def __init__(self, surface: pygame.Surface, x=0.0,
                  y=0.0, size_coeff=1.0, angle=0.0,
                  plates_number=4):
-        self.__display_surface = display_surface
+        self.__surface = surface
         self.__x = x
         self.__y = y
         self.__angle = angle
@@ -63,4 +63,4 @@ class Mill:
 
     def draw(self, color):
         for plate in self.__plates:
-            pygame.draw.polygon(self.__display_surface, color, plate.points)
+            pygame.draw.polygon(self.__surface, color, plate.points)

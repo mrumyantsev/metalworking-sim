@@ -38,7 +38,7 @@ class Engine:
         pygame.display.set_caption('Metalworking: The Game')
         pygame.mouse.set_visible(False)
 
-        self.__display_surface = pygame.display.set_mode(
+        self.__surface = pygame.display.set_mode(
             (self.__resolution_width, self.__resolution_height))
         self.__clock = pygame.time.Clock()
 
@@ -91,16 +91,16 @@ class Engine:
     # General cycle.
     def run(self) -> None:
         while not self.__is_game_over:
-            self.__display_surface.fill(self.__steel_color)
+            self.__surface.fill(self.__steel_color)
 
-            trajectory = trajectory_module.Trajectory(self.__display_surface)
+            trajectory = trajectory_module.Trajectory(self.__surface)
             radius = radius_module.Radius(self.__spindle_x, self.__spindle_y,
                                           self.__motion_direction, self.__mill_radial_runout_mm*100.0,
                                           0.0)
-            mill = mill_module.Mill(self.__display_surface, radius.circle_x,
+            mill = mill_module.Mill(self.__surface, radius.circle_x,
                                     radius.circle_y, self.__mill_diameter_mm/6.0,
                                     0.0, self.__mill_flutes_number)
-            info = info_screen.InfoScreen(self.__display_surface, 2, 2, radius)
+            info = info_screen.InfoScreen(self.__surface, 2, 2, radius)
 
             self.__run_stage(trajectory, radius, mill, info)
 
