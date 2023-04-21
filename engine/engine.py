@@ -1,4 +1,4 @@
-from config import config
+from lib import lib
 import pygame
 import math
 from trajectory import trajectory as trajectory_module
@@ -32,13 +32,13 @@ class Engine:
 
         self.__fps = cfg['r_fps']
 
-        self.__background_color = config.get_color_value(
+        self.__background_color = lib.get_color_value(
             cfg['r_backgroundColor'])
-        self.__steel_color = config.get_color_value(
+        self.__steel_color = lib.get_color_value(
             cfg['r_steelColor'])
-        self.__trajectory_color = config.get_color_value(
+        self.__trajectory_color = lib.get_color_value(
             cfg['r_trajectoryColor'])
-        self.__mill_plate_color = config.get_color_value(
+        self.__mill_plate_color = lib.get_color_value(
             cfg['r_millPlateColor'])
 
         pygame.init()
