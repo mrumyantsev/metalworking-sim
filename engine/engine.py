@@ -35,7 +35,7 @@ class Engine:
             cfg['r_millPlateColor'])
 
         pygame.init()
-        pygame.display.set_caption('Metalworking: The Game')
+        pygame.display.set_caption('Metalworking Simulator')
         pygame.mouse.set_visible(False)
 
         self.__surface = pygame.display.set_mode(
