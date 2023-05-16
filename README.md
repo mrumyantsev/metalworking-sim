@@ -28,7 +28,7 @@ This is the realistic 2D simulator of mechanical cutting process. It provides li
         - in MacOS:
             `python get-pip.py`
     - Get some modules by using `pip`, required by this application:
-        `pip install pygame`
+        `pip install pygame pyyaml`
 - Once you have installed Python and `pip`, launch the file named `__main__.py` inside the `main` directory.
 - The goal is simple: cut as many steel as you can. If the cutting tool hits far beyond the screen, the stage will be restarted.
 - Use control keys to change work conditions.
