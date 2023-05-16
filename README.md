@@ -2,7 +2,7 @@
 
 This is the realistic 2D simulator of mechanical cutting process. It provides life-close demonstration of cutting tool itself, its runout, cut path and trajectory of the center of tool. User can affect the process by pressing control keys.
 
-![v0_1](https://user-images.githubusercontent.com/36193247/230894403-85afeedb-1923-4da7-817b-bbe13739738b.png)
+![v0_2](https://github.com/mrumyantsev/metalworking-sim/assets/36193247/e7b4bcb9-6d9b-4ea9-a475-5a8baf9009d5)
 
 # Control Keys
 
