@@ -1,11 +1,16 @@
-from info_screen.info_screen import InfoScreen
-from lib import lib
+import os
+
+
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'True'
+
+
 import pygame
 import math
-from trajectory import trajectory as trajectory_module
 from radius import radius as radius_module
 from mill import mill as mill_module
+from trajectory import trajectory as trajectory_module
 from info_screen import info_screen
+from lib import lib
 
 
 _SPEED_MULTIPLIER = 2.0
