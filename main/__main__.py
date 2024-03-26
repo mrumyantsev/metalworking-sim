@@ -21,7 +21,7 @@ from engine import engine as engine_module
 
 
 def main() -> None:
-    cfg_path = os.path.join(project_dir, 'config.yml')
+    cfg_path = os.path.join(project_dir, './configs/config.yml')
     cfg = config.load_config(cfg_path)
 
     engine = engine_module.Engine(cfg)
