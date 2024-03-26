@@ -79,7 +79,7 @@ class InfoScreen:
                          self.__x, self.__y + 45, forecolor)
 
     def __draw_text(self, text, x, y, color) -> None:
-        font = pygame.font.Font('./Fonts/FragmentMono-Regular.ttf', 13)
+        font = pygame.font.Font('./fonts/FragmentMono-Regular.ttf', 13)
         font_surface = font.render(text, True, color)
         font_place = font_surface.get_rect(x=x + 2, y=y)
         self.__surface.blit(font_surface, font_place)
