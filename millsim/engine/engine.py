@@ -94,12 +94,15 @@ class Engine:
             self.__surface.fill(self.__steel_color)
 
             trajectory = trajectory_module.Trajectory(self.__surface)
+
             radius = radius_module.Radius(self.__spindle_x, self.__spindle_y,
                                           self.__motion_direction, self.__mill_radial_runout_mm*100.0,
                                           0.0)
+            
             mill = mill_module.Mill(self.__surface, radius.circle_x,
                                     radius.circle_y, self.__mill_diameter_mm/6.0,
                                     0.0, self.__mill_flutes_number)
+            
             info = info_screen.InfoScreen(self.__surface, 2, 2, radius)
 
             self.__run_stage(trajectory, radius, mill, info)
@@ -119,15 +122,19 @@ class Engine:
                         self.__angle_coeff)
             
             mill.draw(self.__background_color)
+
             mill.move(radius.circle_x, radius.circle_y, self.__angle_coeff)
+
             mill.draw(self.__mill_plate_color)
             
             trajectory.add_point(radius.circle_x, radius.circle_y)
+
             trajectory.draw(self.__trajectory_color)
 
             info.update_conditions(self.__spindle_speed_rpm, self.__feed_rate_mmpm,
-                                   self.__motion_direction, self.__is_stop_rotation,
-                                   self.__is_stop_motion)
+                                   self.__motion_direction, self.__is_rotate_clockwise,
+                                   self.__is_stop_rotation, self.__is_stop_motion)
+            
             info.draw_info(self.__mill_plate_color, self.__background_color)
 
             self.__clock.tick(self.__fps)

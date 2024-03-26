@@ -8,6 +8,8 @@ _RPM_SIGN = '[RPM]'
 _MMPM_SIGN = '[mm/min]'
 _MM_SIGN = '[mm]'
 _STOP_SIGN = '[stop]'
+_CW_SIGN = '[cw]'
+_CCW_SIGN = '[ccw]'
 _PLUS_SIGN = '[+]'
 _MINUS_SIGN = '[-]'
 _NO_SIGN = ''
@@ -24,16 +26,19 @@ class InfoScreen:
         self.__spindle_speed_rpm = 0
         self.__feed_rate_mmpm = 0
         self.__motion_direction = ''
+        self.__is_rotate_clockwise = False
         self.__is_stop_rotation = False
         self.__is_stop_motion = False
 
         self.__extra_sign = _NO_SIGN
 
     def update_conditions(self, spindle_speed_rpm, feed_rate_mmpm,
-                          motion_direction, is_stop_rotation, is_stop_motion) -> None:
+                          motion_direction, is_rotate_clockwise,
+                          is_stop_rotation, is_stop_motion) -> None:
         self.__spindle_speed_rpm = spindle_speed_rpm
         self.__feed_rate_mmpm = feed_rate_mmpm
         self.__motion_direction = motion_direction
+        self.__is_rotate_clockwise = is_rotate_clockwise
         self.__is_stop_rotation = is_stop_rotation
         self.__is_stop_motion = is_stop_motion
 
@@ -45,7 +50,10 @@ class InfoScreen:
         if (self.__is_stop_rotation):
             self.__extra_sign = _STOP_SIGN
         else:
-            self.__extra_sign = _NO_SIGN
+            if (self.__is_rotate_clockwise):
+                self.__extra_sign = _CW_SIGN
+            else:
+                self.__extra_sign = _CCW_SIGN
 
         self.__draw_text(f'S: {self.__spindle_speed_rpm:11.4f} {_RPM_SIGN: <8} {self.__extra_sign}',
                          self.__x, self.__y, forecolor)
