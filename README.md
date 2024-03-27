@@ -1,35 +1,59 @@
-# Metalworking Simulator
+# Симулятор фрезерования
 
-This is the realistic 2D simulator of mechanical cutting process. It provides life-close demonstration of cutting tool itself, its runout, cut path and trajectory of the center of tool. User can affect the process by pressing control keys.
+**Milling Simulator** - это симулятор, который демонстрирует процесс металлообработки фрезерованием. Условия симуляции приближены к реальности: показан режущий инструмент (фреза), центр которого находится на некотором расстоянии относительно своего центра вращения (биение), что влияет на форму обрабатываемого материала - создает волны на профиле. Фактический центр инструмента отбрасывает траекторию.
 
-![v0_2](https://github.com/mrumyantsev/metalworking-sim/assets/36193247/e7b4bcb9-6d9b-4ea9-a475-5a8baf9009d5)
+Биение инструмента, количество зубьев, режимы резания и другие настройки можно изменить в файле конфигурации:
 
-# Control Keys
+```
+vim ./configs/config.yml
+```
 
-- `ESC` - quit game.
-- `ENTER` - reset game stage.
-- `CTRL` - stop/unstop rotation.
-- `ALT` - reverse rotation direction.
-- `SPACE` - stop/unstop movement.
-- `ARROW LEFT`, `ARROW RIGHT`, `ARROW UP`, `ARROW DOWN` - change direction of the tool movement, even if the movement is stopped.
-- `/` - decrease movement speed.
-- `*` - increase movement speed.
-- `-` - decrease rotation speed.
-- `+` - increase rotation speed.
+Процессом можно управлять, используя клавиатуру.
 
-# How to play it
+## Клавиши управления
 
-- Download and install the latest Python 3.x from https://www.python.org/downloads/
-    - During installation process install Python downloading tool that called `pip`. Or manually install it later by using this commad:
-        - in Windows:
-            `py get-pip.py`
-        - in Linux:
-            `python get-pip.py`
-        - in MacOS:
-            `python get-pip.py`
-    - Get some modules by using `pip`, required by this application:
-        `pip install pygame pyyaml`
-- Once you have installed Python and `pip`, launch the file named `__main__.py` inside the `main` directory.
-- The goal is simple: cut as many steel as you can. If the cutting tool hits far beyond the screen, the stage will be restarted.
-- Use control keys to change work conditions.
-- Change constants in the file `constants.py`, e.g. game FPS, window resolution, and so on.
+* Выход из программы - клавиша *Esc*.
+* Перезапуск материала и начального положения инструмента - клавиша *Enter*.
+* Остановить/возобновить подачу - клавиша *Пробел*.
+* Остановить/возобновить вращение - клавиша *Ctrl*.
+* Развернуть направление вращения - клавиша *Alt*.
+* Изменить направление движения инструмента - клавиши *влево*, *вправо*, *вверх*, *вниз*.
+* Уменьшить скорость подачи - клавиша */*.
+* Увеличить скорость подачи - клавиша ***.
+* Уменьшить скорость вращения - клавиша *-*.
+* Увеличить скорость вращения - клавиша *+*.
+
+![Фрезерование](./millsim.png "Процесс фрезерования")\
+*Процесс фрезерования*
+
+## Системные требования
+
+**Операционная система:**
+
+- Windows / MacOS / Linux.
+
+**Программное обеспечение:**
+
+- средства разработки языка Python >=v3.6;
+- менеджер пакетов pip языка Python;
+- утилита make.
+
+## Установка и запуск
+
+Перед запуском следует скачать и установить пакеты, которые используются в данном приложении.
+
+```
+pip install pyyaml pygame
+```
+
+Запустить программу можно командой:
+
+```
+make fast-run
+```
+
+Или эквивалентной ей командой:
+
+```
+make
+```
