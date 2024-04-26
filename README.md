@@ -1,62 +1,62 @@
-# Milling Simulator
+# Симулятор фрезерования
 
-**Milling Simulator** is a graphical desktop application that simulates the metalworking process through a milling operation.
+**Симулятор фрезерования** - это графическое десктопное приложение, которое симулирует процесс металлообработки операцией фрезерования.
 
-The simulation shows the basic mechanics of the process: a rotating cutting tool (mill), the center of which is located at a certain distance relative to its center of rotation (runout), passes through the material being processed (relatively metal). The actual center of the tool discards the path.
+Симуляция показывает основную механику процесса: вращающийся режущий инструмент (фреза), центр которого находится на некотором расстоянии относительно своего центра вращения (биение), проходит через обрабатываемый материал (условно - металл). Фактический центр инструмента отбрасывает траекторию.
 
-![Milling](./millsim.png "Milling process")\
-*Milling process displayed on screen*
+![Фрезерование](./millsim.png "Процесс фрезерования")\
+*Процесс фрезерования, отображаемый на экране*
 
-## Controls
+## Управление
 
-Press keys on the keyboard to control the processing.
+Нажимайте клавиши на клавиатуре, чтобы управлять процессом обработки.
 
-* Stop/resume feeding - *Space* key.
-* Stop/resume rotation - *Ctrl* key.
-* Expand the direction of rotation - *Alt* key.
-* Change the direction of movement of the tool - keys *left*, *right*, *up*, *down*.
-* Reduce feed speed - */* key.
-* Increase feed speed - *\** key.
-* Reduce rotation speed - key *-*.
-* Increase rotation speed - *+* key.
-* Restarting the material and the initial position of the tool - *Enter* key.
-* Exit the program - *Esc* key.
+* Остановить/возобновить подачу - клавиша *Пробел*.
+* Остановить/возобновить вращение - клавиша *Ctrl*.
+* Развернуть направление вращения - клавиша *Alt*.
+* Изменить направление движения инструмента - клавиши *влево*, *вправо*, *вверх*, *вниз*.
+* Уменьшить скорость подачи - клавиша */*.
+* Увеличить скорость подачи - клавиша *\**.
+* Уменьшить скорость вращения - клавиша *-*.
+* Увеличить скорость вращения - клавиша *+*.
+* Перезапуск материала и начального положения инструмента - клавиша *Enter*.
+* Выход из программы - клавиша *Esc*.
 
-## Configuration
+## Конфигурация
 
-Open and edit the configuration file to change tool runout, number of teeth, cutting conditions, and other settings.
+Откройте и отредактируйте файл конфигурации, чтобы изменить биение инструмента, количество зубьев, режимы резания и другие настройки.
 
 ```
 vim ./configs/config.yml
 ```
 
-## System requirements
+## Системные требования
 
-**Operating system:**
+**Операционная система:**
 
 - Windows / macOS / Linux/UNIX.
 
-**Software:**
+**Программное обеспечение:**
 
-- Python programming language >=3.6.
-- pip package manager for Python.
-- make utility.
+- язык программирования Python >=3.6;
+- менеджер пакетов pip для Python;
+- утилита make.
 
-## Installation and launch
+## Установка и запуск
 
-Download and install the packages required for this application.
+Скачайте и установите пакеты, необходимые для данного приложения.
 
 ```
 pip install pyyaml pygame
 ```
 
-Launch the program.
+Запустите программу.
 
 ```
 make fast-run
 ```
 
-Launch the program (short command).
+Запустите программу (сокращенная команда).
 
 ```
 make
